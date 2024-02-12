@@ -5,7 +5,7 @@ import useUsers from "@/hooks/useUsers";
 import React from "react";
 import useBlogs from "@/hooks/useBlogs";
 
-type TProps = {
+export type TProps = {
   users: {
     _id: string;
     username: string;
@@ -21,20 +21,18 @@ type TProps = {
       | "Cyber Security expert";
   }[];
   user: {
-    users: {
-      _id: string;
-      username: string;
-      image: string;
-      email: string;
-      createdAt: any;
-      nickname?: string;
-      jobtype?:
-        | "Frontend developer"
-        | "UI/UX designer"
-        | "Backend developer"
-        | "Software engineer"
-        | "Cyber Security expert";
-    };
+    _id: string;
+    username: string;
+    image: string;
+    email: string;
+    createdAt: any;
+    nickname?: string;
+    jobtype?:
+      | "Frontend developer"
+      | "UI/UX designer"
+      | "Backend developer"
+      | "Software engineer"
+      | "Cyber Security expert";
   };
   blogs: {
     author: {
@@ -51,6 +49,7 @@ type TProps = {
         | "Software engineer"
         | "Cyber Security expert";
     };
+    _id:string
     title: string;
     image: string;
     firstParagraph: string;

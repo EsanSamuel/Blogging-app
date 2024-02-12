@@ -95,6 +95,7 @@ export interface blogType {
       | "Software engineer"
       | "Cyber Security expert";
   };
+  _id: string;
   title: string;
   image: string;
   firstParagraph: string;

@@ -3,6 +3,7 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
 import { useRouter } from "next/navigation";
+import { FaHashnode } from "react-icons/fa6";
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -11,7 +12,10 @@ const Navbar = () => {
     <div className="flex justify-between border-b border-neutral-200 md:py-4 md:px-10 p-5">
       <div className="flex gap-4 items-center justify-center">
         <AiOutlineMenu className="text-[20px] font-bold text-neutral-500 md:hidden" />
-        <h1 className="md:text-[30px] text-[25px] font-extrabold">hashnode</h1>
+        <h1 className="md:text-[30px] text-[25px] font-extrabold flex gap-2 items-center">
+          <FaHashnode className="text-[#407ef1] text-[30px]" />
+          hashnode
+        </h1>
       </div>
       <ul className="flex gap-10 text-[14px] justify-center items-center font-bold text-neutral-500 md:flex hidden">
         <li>My Feed</li>
