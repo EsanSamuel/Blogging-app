@@ -26,7 +26,7 @@ const Homebar = () => {
         <AiOutlineMenu className="text-[20px] font-extrabold text-neutral-500 md:hidden" />
         <h1 className="md:text-[30px] text-[25px] font-extrabold flex gap-2 items-center">
           <FaHashnode className="text-[#407ef1] text-[30px]" />
-          hashnode
+          <span className="md:flex hidden">hashnode</span>
         </h1>
       </div>
       <ul className="flex gap-10 text-[14px] px-20 font-semibold text-neutral-500 md:flex hidden items-center">
@@ -40,7 +40,7 @@ const Homebar = () => {
           <AiOutlineSearch className="text-[20px] font-bold text-neutral-500 md:flex hidden" />
           <div>
             <button
-              className="bg-[#407ef1] text-white px-5 py-2 rounded-[30px] text-[15px] flex gap-2 md:flex hidden"
+              className="bg-[#407ef1] text-white px-5 py-2 rounded-[30px] text-[15px] flex gap-2 "
               onClick={() => router.push("/create-blog")}
             >
               <AiOutlineEdit className="text-[25px] font-bold text-white" />{" "}

@@ -19,6 +19,7 @@ export type TProps = {
       | "Backend developer"
       | "Software engineer"
       | "Cyber Security expert";
+    bio?: string;
   }[];
   user: {
     _id: string;
@@ -33,6 +34,7 @@ export type TProps = {
       | "Backend developer"
       | "Software engineer"
       | "Cyber Security expert";
+    bio?: string;
   };
   blogs: {
     author: {
@@ -48,8 +50,42 @@ export type TProps = {
         | "Backend developer"
         | "Software engineer"
         | "Cyber Security expert";
+      bio?: string;
     };
-    _id:string
+    _id: string;
+    title: string;
+    image: string;
+    firstParagraph: string;
+    firstContent: string;
+    secondParagraph: string;
+    secondContent: string;
+    thirdParagraph: string;
+    thirdContent: string;
+    createdAt: any;
+    category:
+      | "Web development"
+      | "Mobile development"
+      | "AI & ML"
+      | "Data science"
+      | "Blockchain";
+  }[];
+  userBlogs: {
+    author: {
+      _id: string;
+      username: string;
+      image: string;
+      email: string;
+      createdAt: any;
+      nickname?: string;
+      jobtype?:
+        | "Frontend developer"
+        | "UI/UX designer"
+        | "Backend developer"
+        | "Software engineer"
+        | "Cyber Security expert";
+      bio?: string;
+    };
+    _id: string;
     title: string;
     image: string;
     firstParagraph: string;
@@ -86,9 +122,15 @@ const ApiProvider = ({ children }: { children: React.ReactNode }) => {
   if (loadingBlogs) {
     console.log("loading blogs...");
   }
+  const { data: userBlogs = [], isLoading: loadingUserBlogs } = useRoutes(
+    `/api/userblog/${session?.user?.id}`
+  );
+  if (loadingUserBlogs) {
+    console.log("loading user blogs...");
+  }
 
   return (
-    <ApiContext.Provider value={{ users, user, blogs }}>
+    <ApiContext.Provider value={{ users, user, blogs, userBlogs }}>
       {children}
     </ApiContext.Provider>
   );

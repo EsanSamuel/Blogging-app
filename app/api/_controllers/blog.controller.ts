@@ -16,7 +16,6 @@ import BlogComment from "@/models/comment.model";
 import BlogReply from "@/models/reply.model";
 import { ApiError, ApiSuccess } from "@/utils/ApiResponse";
 import { v2 as cloudinary } from "cloudinary";
-//import { revalidatePath } from "next/cache";
 
 //cloudinary configuration
 cloudinary.config({

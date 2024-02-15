@@ -3,11 +3,13 @@ import Card from "@/components/Card";
 import Homebar from "@/components/Homebar";
 import { ApiContext, TProps } from "@/context/ApiProvider";
 import { blogType } from "@/types";
+import Image from "next/image";
 import React, { useContext } from "react";
 import { MdFilterListOff } from "react-icons/md";
+import Setup from "../../components/Setup";
 
 const page = () => {
-  const { blogs } = useContext(ApiContext) as TProps;
+  const { blogs, user } = useContext(ApiContext) as TProps;
   const [filterCategory, setFilterCategory] = React.useState<string>("");
 
   const filterBlog = (category: string) =>
@@ -47,7 +49,7 @@ const page = () => {
           Blockchain
         </button>
         <MdFilterListOff
-          className="text-neutral-500 text-[26px]"
+          className="text-neutral-500 text-[26px] hover:text-[#407ef1] cursor-pointer"
           onClick={() => setFilterCategory("")}
         />
       </div>
@@ -63,6 +65,8 @@ const page = () => {
           ))}
         </div>
       </div>
+
+      <Setup />
     </div>
   );
 };

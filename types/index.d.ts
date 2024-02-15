@@ -12,6 +12,7 @@ export interface IUser extends Document {
     | "Backend developer"
     | "Software engineer"
     | "Cyber Security expert";
+  bio?: string;
 }
 
 export interface IComment extends Document {
@@ -78,6 +79,7 @@ export interface userType {
     | "Backend developer"
     | "Software engineer"
     | "Cyber Security expert";
+  bio?: string;
 }
 
 export interface blogType {

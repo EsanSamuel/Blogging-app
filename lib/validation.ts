@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const userValidation = z.object({
   username: z.string().min(1, {
-    message: "Value too short",
+    message: "username too short",
   }),
   image: z.string().min(1, {
     message: "Value too short",
@@ -15,9 +15,7 @@ export const commentValidation = z.object({
   userId: z.string().min(1, {
     message: "Value too short",
   }),
-  comment: z.string().min(1, {
-    message: "Value too short",
-  }),
+  comment: z.string(),
 });
 
 export type commentType = z.infer<typeof commentValidation>;
@@ -80,6 +78,7 @@ export const nicknameValidation = z.object({
     "Software engineer",
     "Cyber Security expert",
   ]),
+  bio: z.string(),
 });
 
 export type nicknameType = z.infer<typeof nicknameValidation>;
@@ -88,17 +87,13 @@ export const replyValidation = z.object({
   userId: z.string().min(1, {
     message: "Value too short",
   }),
-  reply: z.string().min(1, {
-    message: "Value too short",
-  }),
+  reply: z.string(),
 });
 
 export type replyType = z.infer<typeof replyValidation>;
 
 export const editReplyValidation = z.object({
-  reply: z.string().min(1, {
-    message: "Value too short",
-  }),
+  reply: z.string(),
 });
 
 export type editReplyType = z.infer<typeof editReplyValidation>;

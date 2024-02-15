@@ -27,6 +27,9 @@ const userSchema = new Schema<IUser>({
       "Cyber Security expert",
     ],
   },
+  bio: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: () => new Date(),
