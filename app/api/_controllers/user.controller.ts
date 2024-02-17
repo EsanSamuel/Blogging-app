@@ -16,7 +16,7 @@ type Params = {
   };
 };
 
-export default class userController {
+class userController {
   static async getAllUsers(request: Request) {
     try {
       connectDB();
@@ -89,7 +89,7 @@ export default class userController {
       const user = await Users.findById(params.id);
       user.nickname = nickname;
       user.jobtype = jobtype;
-      user.bio = bio
+      user.bio = bio;
       await user.save();
       return new Response(
         JSON.stringify(new ApiSuccess(201, "success", user)),
@@ -131,3 +131,5 @@ export default class userController {
     }
   }
 }
+
+export default userController;

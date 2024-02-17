@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "@/styles/globals.css";
+import "../styles/globals.css";
 import Provider from "@/components/Provider";
 import ApiProvider from "@/context/ApiProvider";
 

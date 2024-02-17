@@ -1,3 +1,4 @@
+//Controller backend code for the blog functionality
 import connectDB from "@/lib/connect";
 import {
   blogType,
@@ -31,7 +32,7 @@ type Params = {
   };
 };
 
-export default class BlogController {
+class BlogController {
   //create blog
   static async createBlog(request: Request) {
     const validate = blogValidation.parse(await request.json());
@@ -220,9 +221,9 @@ export default class BlogController {
   static async getBlogComments(request: Request, { params }: Params) {
     try {
       connectDB();
-      const getComments = await BlogComment.find({ blog: params.id }).populate(
-        "author"
-      );
+      const getComments = await BlogComment.find({ blog: params.id })
+        .populate("author")
+        .populate("blog");
       return new Response(
         JSON.stringify(
           new ApiSuccess(200, "Blog comments fetched!", getComments)
@@ -352,6 +353,25 @@ export default class BlogController {
     }
   }
 
+  static async getBlogReply(request: Request, { params }: Params) {
+    try {
+      connectDB();
+      const getReply = await BlogReply.findById(params.id).populate("author");
+      return new Response(
+        JSON.stringify(
+          new ApiSuccess(200, "Blog comment reply fetched!", getReply)
+        ),
+        { status: 200 }
+      );
+    } catch (error) {
+      console.log(error);
+      return new Response(
+        JSON.stringify(new ApiError(500, "Something went wrong!", [error])),
+        { status: 500 }
+      );
+    }
+  }
+
   //delete a specific blog comment reply
   static async deleteBlogCommentReply(request: Request, { params }: Params) {
     try {
@@ -393,6 +413,8 @@ export default class BlogController {
     }
   }
 }
+
+export default BlogController;
 
 /*coded by Esan Samuel
   designed by Esan Samuel*/

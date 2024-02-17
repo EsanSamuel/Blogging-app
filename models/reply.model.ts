@@ -1,7 +1,7 @@
 import { IReply } from "@/types";
 import { Schema, models, model } from "mongoose";
 
-const replySchema = new Schema<IReply>({
+const replyss = new Schema<IReply>({
   author: {
     type: Schema.Types.ObjectId,
     ref: "Users",
@@ -20,5 +20,5 @@ const replySchema = new Schema<IReply>({
   },
 });
 
-const BlogReply = models.BlogReply || model<IReply>("BlogReply", replySchema);
+const BlogReply = models.BlogReply || model<IReply>("BlogReply", replyss);
 export default BlogReply;

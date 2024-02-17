@@ -14,6 +14,7 @@ const page = () => {
 
   const filterBlog = (category: string) =>
     filterCategory ? blogs.filter((blog) => blog.category === category) : blogs;
+
   return (
     <div className="w-full pb-10">
       <Homebar />

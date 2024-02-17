@@ -3,11 +3,12 @@ import { blogType } from "@/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useMemo } from "react";
 import { AiOutlineDelete, AiOutlineHeart } from "react-icons/ai";
-import { FaRegComment } from "react-icons/fa";
 import { FaRegComments } from "react-icons/fa6";
 import { BsBookmarkStar } from "react-icons/bs";
+import { formatDistanceToNowStrict } from "date-fns";
+import useRoutes from "@/hooks/useRoutes";
 
 type Props = {
   blog: blogType;
@@ -20,17 +21,32 @@ const Card = ({ blog }: Props) => {
     if (blog?.author?._id === session?.user?.id) return router.push("/profile");
 
     router.push(
-      `/profile/${blog?.author?._id}?username=${blog?.author?.username}?image=${blog?.author?.image}?email=${blog?.author?.email}`
+      `/profile/${blog?.author?._id}?username=${blog?.author?.username}&image=${blog?.author?.image}&email=${blog?.author?.email}`
     );
   };
 
   const deleteblog = async () => {
     try {
-      const response = await $axios.delete(`/api/blog/${blog._id}`);
+      await $axios.delete(`/api/blog/${blog._id}`);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const createdAt = useMemo(() => {
+    if (!blog?.createdAt) {
+      return null;
+    }
+    const date = new Date(blog?.createdAt);
+    return formatDistanceToNowStrict(date);
+  }, [blog?.createdAt]);
+
+  const handleBlogClick = () => {
+    router.push(`/Blog?blogId=${blog._id}`);
+  };
+
+  const { data: comments = [] } = useRoutes(`/api/comment/${blog._id}`);
+
   return (
     <div className="h-auto border border-neutral-200 rounded-[10px] p-5 w-auto">
       <div className="md:flex justify-between gap-5">
@@ -52,7 +68,10 @@ const Card = ({ blog }: Props) => {
               </p>
             </div>
           </div>
-          <h1 className="font-bold text-neutral-700 text-[22px] pt-2">
+          <h1
+            className="font-bold text-neutral-700 text-[22px] pt-2"
+            onClick={handleBlogClick}
+          >
             {blog?.title}
           </h1>
           <p className="text-neutral-400 text-[14px] md:flex hidden">

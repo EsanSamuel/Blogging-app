@@ -6,8 +6,9 @@ import { CiImageOn } from "react-icons/ci";
 import $axios from "@/lib/api";
 import { useSession } from "next-auth/react";
 import { IoCloseOutline } from "react-icons/io5";
-import useModal from "@/hooks/useModal";
+import useModal from "@/hooks/zustand/useModal";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 
 const CreateBlog = () => {
   const { data: session } = useSession();

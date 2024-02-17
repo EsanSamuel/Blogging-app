@@ -115,3 +115,251 @@ export interface blogType {
     | "Blockchain";
 }
 [];
+
+export interface allCommentsProps {
+  author: {
+    _id: string;
+    username: string;
+    image: string;
+    email: string;
+    createdAt: any;
+    nickname?: string;
+    jobtype?:
+      | "Frontend developer"
+      | "UI/UX designer"
+      | "Backend developer"
+      | "Software engineer"
+      | "Cyber Security expert";
+  };
+  blog: {
+    author: {
+      _id: string;
+      username: string;
+      image: string;
+      email: string;
+      createdAt: any;
+      nickname?: string;
+      jobtype?:
+        | "Frontend developer"
+        | "UI/UX designer"
+        | "Backend developer"
+        | "Software engineer"
+        | "Cyber Security expert";
+    };
+    _id: string;
+    title: string;
+    image: string;
+    firstParagraph: string;
+    firstContent: string;
+    secondParagraph: string;
+    secondContent: string;
+    thirdParagraph: string;
+    thirdContent: string;
+    createdAt: any;
+    category:
+      | "Web development"
+      | "Mobile development"
+      | "AI & ML"
+      | "Data science"
+      | "Blockchain";
+  };
+  _id: string;
+  comment: string;
+  createdAt: any;
+}
+[];
+
+export interface commentProps {
+  author: {
+    _id: string;
+    username: string;
+    image: string;
+    email: string;
+    createdAt: any;
+    nickname?: string;
+    jobtype?:
+      | "Frontend developer"
+      | "UI/UX designer"
+      | "Backend developer"
+      | "Software engineer"
+      | "Cyber Security expert";
+  };
+  blog: {
+    author: {
+      _id: string;
+      username: string;
+      image: string;
+      email: string;
+      createdAt: any;
+      nickname?: string;
+      jobtype?:
+        | "Frontend developer"
+        | "UI/UX designer"
+        | "Backend developer"
+        | "Software engineer"
+        | "Cyber Security expert";
+    };
+    _id: string;
+    title: string;
+    image: string;
+    firstParagraph: string;
+    firstContent: string;
+    secondParagraph: string;
+    secondContent: string;
+    thirdParagraph: string;
+    thirdContent: string;
+    createdAt: any;
+    category:
+      | "Web development"
+      | "Mobile development"
+      | "AI & ML"
+      | "Data science"
+      | "Blockchain";
+  };
+  _id: string;
+  comment: string;
+  createdAt: any;
+}
+
+export interface replyProps {
+  _id: string;
+  reply: string;
+  createdAt: any;
+  author: {
+    _id: string;
+    username: string;
+    image: string;
+    email: string;
+    createdAt: any;
+    nickname?: string;
+    jobtype?:
+      | "Frontend developer"
+      | "UI/UX designer"
+      | "Backend developer"
+      | "Software engineer"
+      | "Cyber Security expert";
+  };
+  blogcomment: {
+    author: {
+      _id: string;
+      username: string;
+      image: string;
+      email: string;
+      createdAt: any;
+      nickname?: string;
+      jobtype?:
+        | "Frontend developer"
+        | "UI/UX designer"
+        | "Backend developer"
+        | "Software engineer"
+        | "Cyber Security expert";
+    };
+    blog: {
+      author: {
+        _id: string;
+        username: string;
+        image: string;
+        email: string;
+        createdAt: any;
+        nickname?: string;
+        jobtype?:
+          | "Frontend developer"
+          | "UI/UX designer"
+          | "Backend developer"
+          | "Software engineer"
+          | "Cyber Security expert";
+      };
+      _id: string;
+      title: string;
+      image: string;
+      firstParagraph: string;
+      firstContent: string;
+      secondParagraph: string;
+      secondContent: string;
+      thirdParagraph: string;
+      thirdContent: string;
+      createdAt: any;
+      category:
+        | "Web development"
+        | "Mobile development"
+        | "AI & ML"
+        | "Data science"
+        | "Blockchain";
+    };
+    _id: string;
+    comment: string;
+    createdAt: any;
+  };
+}
+[];
+
+export interface singleReplyProps {
+  _id: string;
+  reply: string;
+  createdAt: any;
+  author: {
+    _id: string;
+    username: string;
+    image: string;
+    email: string;
+    createdAt: any;
+    nickname?: string;
+    jobtype?:
+      | "Frontend developer"
+      | "UI/UX designer"
+      | "Backend developer"
+      | "Software engineer"
+      | "Cyber Security expert";
+  };
+  blogcomment: {
+    author: {
+      _id: string;
+      username: string;
+      image: string;
+      email: string;
+      createdAt: any;
+      nickname?: string;
+      jobtype?:
+        | "Frontend developer"
+        | "UI/UX designer"
+        | "Backend developer"
+        | "Software engineer"
+        | "Cyber Security expert";
+    };
+    blog: {
+      author: {
+        _id: string;
+        username: string;
+        image: string;
+        email: string;
+        createdAt: any;
+        nickname?: string;
+        jobtype?:
+          | "Frontend developer"
+          | "UI/UX designer"
+          | "Backend developer"
+          | "Software engineer"
+          | "Cyber Security expert";
+      };
+      _id: string;
+      title: string;
+      image: string;
+      firstParagraph: string;
+      firstContent: string;
+      secondParagraph: string;
+      secondContent: string;
+      thirdParagraph: string;
+      thirdContent: string;
+      createdAt: any;
+      category:
+        | "Web development"
+        | "Mobile development"
+        | "AI & ML"
+        | "Data science"
+        | "Blockchain";
+    };
+    _id: string;
+    comment: string;
+    createdAt: any;
+  };
+}

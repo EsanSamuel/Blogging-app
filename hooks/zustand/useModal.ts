@@ -12,4 +12,4 @@ const useModal = create<modalProps>((set) => ({
   onClose: () => set({ isOpen: false }),
 }));
 
-export default useModal
+export default useModal;
