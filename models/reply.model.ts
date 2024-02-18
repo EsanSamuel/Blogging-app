@@ -16,7 +16,7 @@ const replyss = new Schema<IReply>({
   },
   createdAt: {
     type: Date,
-    default: () => new Date(),
+    default: () => new Date().toISOString(),
   },
 });
 

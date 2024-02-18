@@ -89,7 +89,7 @@ export type nicknameType = z.infer<typeof nicknameValidation>;
 
 export const replyValidation = z.object({
   userId: z.string().min(1, {
-    message: "Value too short",
+    message: "userId too short",
   }),
   reply: z.string().min(1, {
     message: "reply too short",
@@ -103,3 +103,14 @@ export const editReplyValidation = z.object({
 });
 
 export type editReplyType = z.infer<typeof editReplyValidation>;
+
+export const saveValidation = z.object({
+  userId: z.string().min(1, {
+    message: "userId too short",
+  }),
+  ownerId: z.string().min(1, {
+    message: "Value too short",
+  }),
+});
+
+export type saveType = z.infer<typeof saveValidation>;

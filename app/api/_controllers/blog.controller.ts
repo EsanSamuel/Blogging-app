@@ -11,10 +11,13 @@ import {
   editReplyValidation,
   replyType,
   replyValidation,
+  saveType,
+  saveValidation,
 } from "@/lib/validation";
 import Blog from "@/models/blog.model";
 import BlogComment from "@/models/comment.model";
 import BlogReply from "@/models/reply.model";
+import Save from "@/models/save.modal";
 import { ApiError, ApiSuccess } from "@/utils/ApiResponse";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -286,6 +289,7 @@ class BlogController {
     const validate = editCommentValidation.parse(await request.json());
     const { comment }: editCommentType = validate;
     try {
+      connectDB();
       const blogComment = await BlogComment.findById(params.id);
       blogComment.comment = comment;
       await blogComment.save();
@@ -397,11 +401,93 @@ class BlogController {
     const validate = editReplyValidation.parse(await request.json());
     const { reply }: editReplyType = validate;
     try {
+      connectDB();
       const blogreply = await BlogReply.findById(params.id);
       blogreply.reply = reply;
       await blogreply.save();
       return new Response(
         JSON.stringify(new ApiSuccess(200, "Blog Comment edited!", blogreply)),
+        { status: 200 }
+      );
+    } catch (error) {
+      console.log(error);
+      return new Response(
+        JSON.stringify(new ApiError(500, "Something went wrong!", [error])),
+        { status: 500 }
+      );
+    }
+  }
+
+  static async saveBlog(request: Request, { params }: Params) {
+    const validate = saveValidation.parse(await request.json());
+    const { userId, ownerId }: saveType = validate;
+    try {
+      connectDB();
+      const blogId = params.id;
+      const saveblog = new Save({
+        author: userId,
+        blog: blogId,
+        owner: ownerId,
+      });
+      await saveblog.save();
+      return new Response(
+        JSON.stringify(new ApiSuccess(201, "Blog saved!", saveblog)),
+        { status: 201 }
+      );
+    } catch (error) {
+      console.log(error);
+      return new Response(
+        JSON.stringify(new ApiError(500, "Something went wrong!", [error])),
+        { status: 500 }
+      );
+    }
+  }
+
+  static async getSavedBlogs(request: Request, { params }: Params) {
+    try {
+      connectDB();
+      const getsavedblogs = await Save.find({ author: params.id })
+        .populate("author")
+        .populate("blog")
+        .populate("owner");
+      return new Response(
+        JSON.stringify(
+          new ApiSuccess(200, "Save blogs gotten!", getsavedblogs)
+        ),
+        { status: 200 }
+      );
+    } catch (error) {
+      console.log(error);
+      return new Response(
+        JSON.stringify(new ApiError(500, "Something went wrong!", [error])),
+        { status: 500 }
+      );
+    }
+  }
+
+  static async getOneSavedBlog(request: Request, { params }: Params) {
+    try {
+      connectDB();
+      const getsavedblog = await Save.findById(params.id);
+      return new Response(
+        JSON.stringify(new ApiSuccess(200, "Save blog gotten!", getsavedblog)),
+        { status: 200 }
+      );
+    } catch (error) {
+      console.log(error);
+      return new Response(
+        JSON.stringify(new ApiError(500, "Something went wrong!", [error])),
+        { status: 500 }
+      );
+    }
+  }
+
+  static async unSaveBlog(request: Request, { params }: Params) {
+    try {
+      connectDB();
+      const deleteSave = await Save.findByIdAndDelete(params.id);
+      return new Response(
+        JSON.stringify(new ApiSuccess(200, "Save blog removed!", deleteSave)),
         { status: 200 }
       );
     } catch (error) {
@@ -418,4 +504,4 @@ export default BlogController;
 
 /*coded by Esan Samuel
   designed by Esan Samuel*/
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<(Esan Samuel)>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<(Esan Samuel:-D)>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

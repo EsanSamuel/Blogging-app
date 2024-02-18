@@ -32,7 +32,7 @@ const userSchema = new Schema<IUser>({
   },
   createdAt: {
     type: Date,
-    default: () => new Date(),
+    default: () => new Date().toISOString(),
   },
 });
 

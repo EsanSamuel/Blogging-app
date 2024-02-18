@@ -1,7 +1,7 @@
 "use client";
 import { commentProps, replyProps } from "@/types";
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import $axios from "@/lib/api";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +9,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import useRoutes from "@/hooks/useRoutes";
 import ReplyCard from "./ReplyCard";
+import Image from "next/image";
+import { formatDistanceToNowStrict } from "date-fns";
 
 type Props = {
   comment: commentProps;
@@ -83,9 +85,36 @@ const CommentCard = ({ comment }: Props) => {
 
   const { data: replies = [] } = useRoutes(`/api/reply/${comment._id}`);
 
+  const createdAt = useMemo(() => {
+    if (!comment?.createdAt) {
+      return null;
+    }
+
+    return formatDistanceToNowStrict(new Date(comment?.createdAt));
+  }, [comment?.createdAt]);
+
   return (
-    <div>
-      {comment.comment}
+    <div className="flex flex-col gap-3 pb-3">
+      <div className="flex gap-2 items-center">
+        <Image
+          src={comment?.author?.image}
+          width={100}
+          height={100}
+          className="w-[30px] h-[30px] rounded-full"
+          alt=""
+        />
+        <div className="flex flex-col gap-1">
+          <div className="flex gap-3">
+            <h4 className="text-[10px] text-neutral-500">
+              {comment?.author?.username}
+            </h4>
+            <div>
+              <p className="text-[10px] text-neutral-500">{createdAt!}</p>
+            </div>
+          </div>
+          <h2>{comment?.comment}</h2>
+        </div>
+      </div>
       {replies?.map((reply: replyProps) => (
         <div key={reply._id}>
           <ReplyCard reply={reply} />

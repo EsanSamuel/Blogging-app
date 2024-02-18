@@ -50,6 +50,13 @@ export interface IBlog extends Document {
   dislikes: number;
 }
 
+export interface ISave extends Document {
+  author: mongoose.Types.ObjectId;
+  blog: mongoose.Types.ObjectId;
+  owner: mongoose.Types.ObjectId;
+  createdAt: any;
+}
+
 export interface usersType {
   _id: string;
   username: string;
@@ -115,6 +122,39 @@ export interface blogType {
     | "Blockchain";
 }
 [];
+
+export interface singleblogType {
+  author: {
+    _id: string;
+    username: string;
+    image: string;
+    email: string;
+    createdAt: any;
+    nickname?: string;
+    jobtype?:
+      | "Frontend developer"
+      | "UI/UX designer"
+      | "Backend developer"
+      | "Software engineer"
+      | "Cyber Security expert";
+  };
+  _id: string;
+  title: string;
+  image: string;
+  firstParagraph: string;
+  firstContent: string;
+  secondParagraph: string;
+  secondContent: string;
+  thirdParagraph: string;
+  thirdContent: string;
+  createdAt: any;
+  category:
+    | "Web development"
+    | "Mobile development"
+    | "AI & ML"
+    | "Data science"
+    | "Blockchain";
+}
 
 export interface allCommentsProps {
   author: {

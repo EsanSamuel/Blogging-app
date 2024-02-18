@@ -23,6 +23,12 @@ const CreateBlog = () => {
   const [category, setCategory] = React.useState<string>("");
   const modal = useModal();
   const router = useRouter();
+  const openModal = () => {
+    modal.onOpen();
+  };
+  const closeModal = () => {
+    modal.onClose();
+  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -40,6 +46,10 @@ const CreateBlog = () => {
       setImage(result);
     };
   };
+
+  /*const mutation = useMutation(
+    async (formData: any) => await $axios.post("/api/blog/new", formData)
+  );*/
 
   const createBlog = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,14 +71,6 @@ const CreateBlog = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const openModal = () => {
-    modal.onOpen();
-  };
-
-  const closeModal = () => {
-    modal.onClose();
   };
   return (
     <div className="md:flex gap-5">
@@ -157,7 +159,10 @@ const CreateBlog = () => {
 
       <div></div>
       <div className="p-5 flex gap-4 right-0 mr-10 md:fixed ">
-        <button className="border border-neutral-500 rounded-full text-black p-2 px-4 ">
+        <button
+          className="border border-neutral-500 rounded-full text-black p-2 px-4 "
+          onClick={() => router.push("/home")}
+        >
           Cancel
         </button>
         <button

@@ -1,7 +1,7 @@
-import { IComment } from "@/types";
+import { ISave } from "@/types";
 import { Schema, models, model } from "mongoose";
 
-const blogCommentSchema = new Schema<IComment>({
+const saveSchema = new Schema<ISave>({
   author: {
     type: Schema.Types.ObjectId,
     ref: "Users",
@@ -10,9 +10,9 @@ const blogCommentSchema = new Schema<IComment>({
     type: Schema.Types.ObjectId,
     ref: "Blog",
   },
-  comment: {
-    type: String,
-    required: true,
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "Users",
   },
   createdAt: {
     type: Date,
@@ -20,6 +20,5 @@ const blogCommentSchema = new Schema<IComment>({
   },
 });
 
-const BlogComment =
-  models.BlogComment || model<IComment>("BlogComment", blogCommentSchema);
-export default BlogComment;
+const Save = models.Save || model<ISave>("Save", saveSchema);
+export default Save;

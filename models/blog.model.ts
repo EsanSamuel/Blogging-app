@@ -54,7 +54,7 @@ const blogSchema = new Schema<IBlog>({
   },
   createdAt: {
     type: Date,
-    default: () => new Date(),
+    default: () => new Date().toISOString(),
   },
 });
 

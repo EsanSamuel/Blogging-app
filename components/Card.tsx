@@ -1,5 +1,5 @@
 import $axios from "@/lib/api";
-import { blogType } from "@/types";
+import { blogType, singleblogType } from "@/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -11,7 +11,7 @@ import { formatDistanceToNowStrict } from "date-fns";
 import useRoutes from "@/hooks/useRoutes";
 
 type Props = {
-  blog: blogType;
+  blog: singleblogType;
 };
 
 const Card = ({ blog }: Props) => {
