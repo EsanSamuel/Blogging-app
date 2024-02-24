@@ -44,6 +44,10 @@ const blogSchema = new Schema<IBlog>({
       "Blockchain",
     ],
   },
+  theme: {
+    type: String,
+    enum: ["Light", "Dark"],
+  },
   likes: {
     type: Number,
     default: 0,

@@ -50,6 +50,7 @@ class BlogController {
       thirdParagraph,
       thirdContent,
       category,
+      theme,
     }: blogType = validate;
     try {
       connectDB();
@@ -65,6 +66,7 @@ class BlogController {
         thirdParagraph,
         category,
         thirdContent,
+        theme,
       });
       await newBlog.save();
       return new Response(
@@ -182,6 +184,29 @@ class BlogController {
       );
       return new Response(
         JSON.stringify(new ApiSuccess(200, "Blog fetched!", getuserblog)),
+        { status: 200 }
+      );
+    } catch (error) {
+      console.log(error);
+      return new Response(
+        JSON.stringify(new ApiError(500, "Something went wrong!", [error])),
+        { status: 500 }
+      );
+    }
+  }
+
+  static async getRelatedBlog(request: Request, { params }: Params) {
+    try {
+      connectDB();
+      const blogs = await Blog.find({}).populate("author");
+      const blog = await Blog.findById(params.id).populate("author");
+      const getRelated = blogs.filter(
+        (item) => item.category === blog.category
+      );
+      return new Response(
+        JSON.stringify(
+          new ApiSuccess(200, "Related Blog fetched!", getRelated)
+        ),
         { status: 200 }
       );
     } catch (error) {

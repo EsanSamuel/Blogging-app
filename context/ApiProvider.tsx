@@ -68,6 +68,7 @@ export type TProps = {
       | "AI & ML"
       | "Data science"
       | "Blockchain";
+    theme: "Light" | "Dark";
   }[];
   userBlogs: {
     author: {
@@ -101,6 +102,7 @@ export type TProps = {
       | "AI & ML"
       | "Data science"
       | "Blockchain";
+    theme: "Light" | "Dark";
   }[];
 };
 

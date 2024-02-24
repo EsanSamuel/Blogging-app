@@ -18,6 +18,7 @@ import RelatedBlogsCard from "@/components/RelatedBlogsCard";
 
 const BLOG_URL = "/api/blog";
 const COMMENT_URL = "/api/comment";
+const RELATEDBLOGS = "/api/relatedBlogs";
 
 const Blog = () => {
   const { user, blogs } = React.useContext(ApiContext) as TProps;
@@ -36,8 +37,14 @@ const Blog = () => {
 
   const { data: blog, isLoading } = useRoutes(`${BLOG_URL}/${blogId}`);
 
+  //fetching the related blogs by filtering on client side
   const getRelatedBlogs = blogs.filter(
     (item) => item.category === blog?.category
+  );
+
+  //fetching the related blogs by filtering on server side
+  const { data: relatedblogs = [], isLoading: LoadingReletedBlogs } = useRoutes(
+    `${RELATEDBLOGS}/${blogId}`
   );
 
   if (isLoading) {
@@ -73,10 +80,29 @@ const Blog = () => {
     return formatDistanceToNowStrict(date);
   }, [blog?.createdAt]);
 
+  const saveBlog = async () => {
+    try {
+      const response = await $axios.post(`/api/save/${blogId}`, {
+        userId: session?.user?.id,
+        ownerId: blog?.author?._id,
+      });
+
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-      <Homebar />
-      <div className="pt-20">
+      <Homebar blog={blog}/>
+      <div
+        className={`pt-20 ${
+          blog?.theme === "Dark"
+            ? "bg-slate-900 text-white"
+            : "bg-white text-black"
+        }`}
+      >
         <div className="px-[20%] py-20 ">
           {blog?.image ? (
             <Image
@@ -111,23 +137,43 @@ const Blog = () => {
           )}
           <div className="mt-20 flex flex-col gap-5">
             <h1 className="font-bold text-[30px]">{blog?.firstParagraph}</h1>
-            <p className="text-[22px] text-neutral-500">{blog?.firstContent}</p>
+            <p
+              className={`text-[22px] ${
+                blog?.theme === "Dark" ? "text-white" : "text-neutral-500"
+              } `}
+            >
+              {blog?.firstContent}
+            </p>
           </div>
 
           <div className="mt-20 flex flex-col gap-5">
             <h1 className="font-bold text-[30px]">{blog?.secondParagraph}</h1>
-            <p className="text-[22px] text-neutral-500">
+            <p
+              className={`text-[22px] ${
+                blog?.theme === "Dark" ? "text-white" : "text-neutral-500"
+              } `}
+            >
               {blog?.secondContent}
             </p>
           </div>
 
           <div className="mt-10 flex flex-col gap-5">
             <h1 className="font-bold text-[30px]">{blog?.thirdParagraph}</h1>
-            <p className="text-[22px] text-neutral-500">{blog?.thirdContent}</p>
+            <p
+              className={`text-[22px] ${
+                blog?.theme === "Dark" ? "text-white" : "text-neutral-500"
+              } `}
+            >
+              {blog?.thirdContent}
+            </p>
           </div>
 
           <div className="flex items-center justify-center">
-            <div className="min-h-[50px] min-w-[300px] shadow-lg rounded-full fixed bottom-5 px-7 py-3 bg-white flex justify-between border border-neutral-300">
+            <div
+              className={`min-h-[50px] min-w-[300px] shadow-lg rounded-full fixed bottom-5 px-7 py-3 ${
+                blog?.theme === "Dark" ? " bg-slate-900" : "bg-white"
+              }  flex justify-between border border-neutral-300`}
+            >
               <FaRegHeart className="text-[20px] text-neutral-500" />
               <div className="flex gap-2">
                 <FaRegComment
@@ -138,7 +184,10 @@ const Blog = () => {
                   {comments.length}
                 </h1>
               </div>
-              <FaRegBookmark className="text-[20px] text-neutral-500" />
+              <FaRegBookmark
+                className="text-[20px] text-neutral-500"
+                onClick={saveBlog}
+              />
               <IoShareSocialOutline className="text-[20px] text-neutral-500" />
             </div>
           </div>
@@ -213,14 +262,22 @@ const Blog = () => {
 
         <div className="px-[20%] py-10">
           <h1 className="text-neutral-500 text-[20px]">Related Blogs</h1>
-          {getRelatedBlogs.slice(0, 3)?.map((relatedblog: blogType) => (
-            <div
-              key={relatedblog._id}
-              className="flex md:flex-row flex-col justify-between w-full"
-            >
-              <RelatedBlogsCard blog={relatedblog} />
-            </div>
-          ))}
+          <div className="flex gap-4">
+            {!LoadingReletedBlogs ? (
+              <div className="flex gap-4">
+                {relatedblogs?.slice(0, 3)?.map((relatedblog: blogType) => (
+                  <div
+                    key={relatedblog._id}
+                    className="flex  justify-between w-full"
+                  >
+                    <RelatedBlogsCard blog={relatedblog} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <h2>Loading releted blogs...</h2>
+            )}
+          </div>
         </div>
       </div>
     </>

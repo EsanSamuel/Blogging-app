@@ -21,6 +21,7 @@ const CreateBlog = () => {
   const [thirdParagraph, setThirdParagraph] = React.useState<string>("");
   const [thirdContent, setThirdContent] = React.useState<string>("");
   const [category, setCategory] = React.useState<string>("");
+  const [theme, setTheme] = React.useState<string>("Light");
   const modal = useModal();
   const router = useRouter();
   const openModal = () => {
@@ -65,16 +66,18 @@ const CreateBlog = () => {
         thirdParagraph,
         thirdContent,
         category,
+        theme,
       });
       console.log(response.data);
       router.push("/home");
+      modal.onClose();
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <div className="md:flex gap-5">
-      <Sidebar />
+      <Sidebar setTheme={setTheme} />
       <div className="md:p-20 p-5">
         {!image ? (
           <div className="min-h-[250px] border border-dotted border-neutral-400 rounded  text-center flex justify-center flex-col items-center">

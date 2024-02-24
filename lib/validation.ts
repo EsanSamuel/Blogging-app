@@ -65,6 +65,7 @@ export const blogValidation = z.object({
     "Data science",
     "Blockchain",
   ]),
+  theme: z.enum(["Light", "Dark"]),
 });
 
 export type blogType = z.infer<typeof blogValidation>;

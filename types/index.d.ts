@@ -48,6 +48,7 @@ export interface IBlog extends Document {
     | "Blockchain";
   likes: number;
   dislikes: number;
+  theme: string;
 }
 
 export interface ISave extends Document {
@@ -120,6 +121,7 @@ export interface blogType {
     | "AI & ML"
     | "Data science"
     | "Blockchain";
+  theme: "Light" | "Dark";
 }
 [];
 
@@ -154,6 +156,7 @@ export interface singleblogType {
     | "AI & ML"
     | "Data science"
     | "Blockchain";
+  theme: "Light" | "Dark";
 }
 
 export interface allCommentsProps {

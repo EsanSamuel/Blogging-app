@@ -7,6 +7,7 @@ import Image from "next/image";
 import React, { useContext } from "react";
 import { MdFilterListOff } from "react-icons/md";
 import Setup from "../../components/Setup";
+import Users from "@/components/Users";
 
 const page = () => {
   const { blogs, user } = useContext(ApiContext) as TProps;
@@ -66,9 +67,10 @@ const page = () => {
               </div>
             ))}
           </div>
+          <Users />
         </div>
 
-        <Setup />
+       {/* <Setup />*/}
       </div>
     </div>
   );

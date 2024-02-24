@@ -45,6 +45,15 @@ const Card = ({ blog }: Props) => {
     router.push(`/Blog?blogId=${blog._id}`);
   };
 
+  const handleSaveBlog = async () => {
+    try {
+      const response = await $axios.post(`/api/save/${blog._id}`);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const { data: comments = [] } = useRoutes(`/api/comment/${blog._id}`);
 
   return (
@@ -68,15 +77,17 @@ const Card = ({ blog }: Props) => {
               </p>
             </div>
           </div>
-          <h1
-            className="font-bold text-neutral-700 text-[22px] pt-2"
-            onClick={handleBlogClick}
-          >
-            {blog?.title}
-          </h1>
-          <p className="text-neutral-400 text-[14px] md:flex hidden">
-            {(blog?.firstContent).slice(0, 120)}...
-          </p>
+          <div className="flex flex-col gap-4">
+            <h1
+              className="font-bold text-neutral-700 text-[22px] pt-2"
+              onClick={handleBlogClick}
+            >
+              {blog?.title}
+            </h1>
+            <p className="text-neutral-400 text-[17px] md:flex hidden">
+              {(blog?.firstContent).slice(0, 120)}...
+            </p>
+          </div>
         </div>
         <div className="flex justify-center items-center">
           <Image
@@ -94,7 +105,10 @@ const Card = ({ blog }: Props) => {
           <FaRegComments className="text-neutral-500 text-[20px] mt-5" />
         </div>
         <div className="flex gap-2 items-center">
-          <BsBookmarkStar className="text-neutral-500 text-[15px] mt-5" />
+          <BsBookmarkStar
+            className="text-neutral-500 text-[15px] mt-5"
+            onClick={handleSaveBlog}
+          />
           <button className="rounded-full bg-[#eaeaea] text-neutral-400 py-1 px-3 mt-5 text-[11px] ">
             {blog?.category}
           </button>
