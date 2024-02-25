@@ -13,7 +13,10 @@ const RelatedBlogsCard = ({ blog }: Props) => {
     router.push(`/Blog?blogId=${blog._id}`);
   };
   return (
-    <div className="border p-5 border-neutral-300 flex flex-col gap-3 rounded-[10px] mt-10">
+    <div
+      className="border p-5 border-neutral-300 flex flex-col gap-3 rounded-[10px] mt-10"
+      onClick={handleClick}
+    >
       <div className="flex gap-3 items-center">
         <Image
           src={blog?.author?.image}
@@ -22,7 +25,13 @@ const RelatedBlogsCard = ({ blog }: Props) => {
           className="w-[30px] h-[30px] rounded-full"
           alt=""
         />
-        <h1 className="text-neutral-500 font-bold">{blog?.author?.username}</h1>
+        <h1
+          className={`font-bold ${
+            blog?.theme === "Dark" ? "text-white" : "text-neutral-500"
+          }`}
+        >
+          {blog?.author?.username}
+        </h1>
       </div>
       <Image
         src={blog?.image}
@@ -32,7 +41,13 @@ const RelatedBlogsCard = ({ blog }: Props) => {
         alt=""
       />
 
-      <h1 className="text-[25px] font-bold text-black">{blog?.title}</h1>
+      <h1
+        className={`text-[25px] font-bold text-black ${
+          blog?.theme === "Dark" ? "text-white" : "text-black"
+        }`}
+      >
+        {blog?.title}
+      </h1>
       <p>{(blog?.firstContent).slice(0, 70)}...</p>
     </div>
   );

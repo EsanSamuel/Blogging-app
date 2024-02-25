@@ -58,6 +58,12 @@ export interface ISave extends Document {
   createdAt: any;
 }
 
+export interface ICustomer extends Document {
+  name: string;
+  email: string;
+  createdAt: any;
+}
+
 export interface usersType {
   _id: string;
   username: string;

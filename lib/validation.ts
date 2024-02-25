@@ -115,3 +115,10 @@ export const saveValidation = z.object({
 });
 
 export type saveType = z.infer<typeof saveValidation>;
+
+export const customerValidation = z.object({
+  email: z.string().min(1),
+  name: z.string().min(1),
+});
+
+export type customerType = z.infer<typeof customerValidation>;

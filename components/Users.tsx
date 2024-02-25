@@ -23,7 +23,7 @@ const Users = () => {
               alt=""
             />
             <div className="flex flex-col">
-              <h1 className="">{user?.username}</h1>
+              <h1 className="font-bold">{user?.username}</h1>
               <p className="text-[13px] text-neutral-500">{user?.email}</p>
             </div>
           </div>

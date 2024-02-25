@@ -1,7 +1,7 @@
 "use client";
 import Homebar from "@/components/Homebar";
 import { ApiContext, TProps } from "@/context/ApiProvider";
-import { format } from "date-fns";
+import { format, formatDistanceToNowStrict } from "date-fns";
 import Image from "next/image";
 import React, { useMemo } from "react";
 
@@ -13,7 +13,7 @@ const YourProfile = () => {
       return null;
     }
     const date = new Date(user?.createdAt);
-    return format(date, "mm/dd/yy");
+    return formatDistanceToNowStrict(date);
   }, [user?.createdAt]);
   return (
     <div>
@@ -39,11 +39,12 @@ const YourProfile = () => {
           </div>
 
           <div className="border border-neutral-300 rounded-[10px] py-5 text-center">
-            Joined on {createdAt}
+            Joined on {createdAt} ago
           </div>
           <div className="grid grid-cols-3 mt-10 gap-3">
             <div className="p-10 border border-neutral-300 rounded-[10px] ">
               <h1 className="font-bold text-[20px]">About Me</h1>
+              <p className="text-neutral-500 text-[14px]">{user?.bio}</p>
             </div>
             <div className="p-10 border border-neutral-300 rounded-[10px] ">
               <h1 className="font-bold text-[20px]">My Tech Stack</h1>
