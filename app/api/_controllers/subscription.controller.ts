@@ -14,21 +14,10 @@ class subscriptionController {
       });
       const validate = customerValidation.parse(await request.json());
       const { email, name }: customerType = validate;
-      const customerExists = await Customer.findOne({ email: email });
       const customer = await stripe.customers.create({
         name,
         email,
       });
-
-      if (customerExists) {
-        return new Response(
-          JSON.stringify(
-            new ApiError(500, "something went wrong", [
-              "Customer already exists!",
-            ])
-          )
-        );
-      }
 
       //create customer in the database
       const newCustomer = new Customer({
@@ -107,3 +96,6 @@ class subscriptionController {
 }
 
 export default subscriptionController;
+
+//cus_Pco0CuPdhaZ8wU
+//cus_PcoEUCps7Ne5qx

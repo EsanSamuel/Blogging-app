@@ -72,6 +72,7 @@ const page = () => {
         </div>
 
         {/* <Setup />*/}
+        {/*<Pricing />*/}
       </div>
     </div>
   );

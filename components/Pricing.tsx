@@ -1,3 +1,4 @@
+"use client";
 import { ApiContext, TProps } from "@/context/ApiProvider";
 import $axios from "@/lib/api";
 import React from "react";
@@ -15,6 +16,7 @@ const Pricing = () => {
       email: user?.email,
     });
     setCustomer(response.data.data?.id);
+    console.log(response);
   };
   return (
     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800 bg-opacity-70 ">
@@ -27,13 +29,18 @@ const Pricing = () => {
             Subscribe to create and cutomise your own personal blogs!
           </p>
           <p className="font-bold text-center text-[17px]">$1.00/monthly</p>
-          <button
-            onClick={() => handleSubscriptionClick("price_abc123")}
-            className="text-white px-4 py-2 rounded-full bg-[#407ef1] hover:opacity-50"
-          >
-            Subscibe Now
-          </button>
-          {customer && <CheckoutForm customerId={customer} priceId={priceId} />}
+          {!customer ? (
+            <button
+              onClick={() =>
+                handleSubscriptionClick("price_1OnXfUI6AqVOEgE3sJPPcKtE")
+              }
+              className="text-white px-4 py-2 rounded-full bg-[#407ef1] hover:opacity-50"
+            >
+              Subscibe Now
+            </button>
+          ) : (
+            <CheckoutForm customerId={customer} priceId={priceId} />
+          )}
         </div>
       </div>
     </div>

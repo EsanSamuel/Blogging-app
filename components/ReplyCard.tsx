@@ -6,7 +6,9 @@ type Props = {
 };
 
 const ReplyCard = ({ reply }: Props) => {
-  return <div>ReplyCard</div>;
+  return <div>
+    {reply.reply}
+  </div>;
 };
 
 export default ReplyCard;

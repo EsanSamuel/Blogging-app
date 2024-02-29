@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   useStripe,
@@ -5,7 +6,7 @@ import {
   Elements,
   useElements,
 } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe, StripeCardElement } from "@stripe/stripe-js";
 import $axios from "@/lib/api";
 
 const stripePromise = loadStripe(
@@ -44,7 +45,7 @@ const CheckoutForm = ({ customerId, priceId }: Props) => {
       subscription.clientSecret,
       {
         payment_method: {
-          card: elements.getElement(CardElement),
+          card: elements.getElement(CardElement) as StripeCardElement,
         },
       }
     );
@@ -57,7 +58,11 @@ const CheckoutForm = ({ customerId, priceId }: Props) => {
     <Elements stripe={stripePromise}>
       <form onSubmit={handleFormSubmit}>
         <CardElement onChange={handleCardInputChange} />
-        <button disabled={!stripe && disabled} type="submit">
+        <button
+          disabled={!stripe && disabled}
+          type="submit"
+          className="text-white px-4 py-2 rounded-full bg-[#407ef1] hover:opacity-50 w-full mt-5"
+        >
           Pay Now
         </button>
       </form>

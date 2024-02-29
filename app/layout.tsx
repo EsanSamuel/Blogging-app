@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import Provider from "@/components/Provider";
 import ApiProvider from "@/context/ApiProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import StripeProvider from "@/components/StripeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,9 @@ export default function RootLayout({
       <Provider>
         {/*<QueryClientProvider client={queryClient}>*/}
         <ApiProvider>
-          <body className={inter.className}>{children}</body>
+          <StripeProvider>
+            <body className={inter.className}>{children}</body>
+          </StripeProvider>
         </ApiProvider>
         {/* </QueryClientProvider>*/}
       </Provider>
