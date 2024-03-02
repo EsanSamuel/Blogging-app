@@ -8,7 +8,8 @@ import { useSession } from "next-auth/react";
 import { IoCloseOutline } from "react-icons/io5";
 import useModal from "@/hooks/zustand/useModal";
 import { useRouter } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
+import { FaMicrophone, FaMicrophoneSlash } from "react-icons/fa";
+import useSpeechRecognition from "@/hooks/useSpeechRecognition";
 
 const CreateBlog = () => {
   const { data: session } = useSession();
@@ -48,10 +49,6 @@ const CreateBlog = () => {
     };
   };
 
-  /*const mutation = useMutation(
-    async (formData: any) => await $axios.post("/api/blog/new", formData)
-  );*/
-
   const createBlog = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -75,6 +72,10 @@ const CreateBlog = () => {
       console.log(error);
     }
   };
+
+  const { inputRef, bodyRef, handleToggleListen, isListening } =
+    useSpeechRecognition();
+
   return (
     <div className="md:flex gap-5">
       <Sidebar setTheme={setTheme} />
@@ -99,7 +100,7 @@ const CreateBlog = () => {
             />
           </div>
         )}
-        <div className="py-10">
+        <div className="py-10 flex gap-8">
           <select
             className="text-neutral-500 outline-none"
             onChange={(e) => setCategory(e.target.value)}
@@ -111,17 +112,33 @@ const CreateBlog = () => {
             <option>Data science</option>
             <option>Blockchain</option>
           </select>
+
+          <div>
+            <button
+              onClick={handleToggleListen}
+              className="p-3 bg-[#407ef1] rounded-full hover:opacity-50"
+            >
+              {isListening ? (
+                <FaMicrophoneSlash className="text-[20px] text-white " />
+              ) : (
+                <FaMicrophone className="text-[20px] text-white " />
+              )}
+            </button>
+          </div>
         </div>
         <div className="flex flex-col">
           <input
             className="border-none text-neutral-500 text-[40px] font-bold outline-none"
             placeholder="Article Title..."
             onChange={(e) => setTitle(e.target.value)}
+            ref={inputRef}
           />
+
           <input
             className="border-none text-neutral-500 text-[20px] font-bold mt-10 outline-none"
             placeholder="First Pargraph..."
             onChange={(e) => setFirstParagraph(e.target.value)}
+            ref={bodyRef}
           />
 
           <textarea

@@ -110,7 +110,9 @@ export const ApiContext = React.createContext<TProps | null>(null);
 
 const ApiProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: session } = useSession();
-  const { data: users = [], isLoading } = useUsers();
+  const { data: users = [], isLoading } = useRoutes(
+    `/api/users/${session?.user?.id}`
+  );
   if (isLoading) {
     console.log("loading users...");
   }

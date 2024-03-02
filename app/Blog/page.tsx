@@ -93,9 +93,19 @@ const Blog = () => {
     }
   };
 
+  const handleLike = async () => {
+    try {
+      await $axios.post(`/api/like/${blogId}`, {
+        userId: session?.user?.id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-      <Homebar blog={blog}/>
+      <Homebar blog={blog} />
       <div
         className={`pt-20 ${
           blog?.theme === "Dark"
@@ -174,7 +184,13 @@ const Blog = () => {
                 blog?.theme === "Dark" ? " bg-slate-900" : "bg-white"
               }  flex justify-between border border-neutral-300`}
             >
-              <FaRegHeart className="text-[20px] text-neutral-500" />
+              <div className="flex gap-2">
+                <FaRegHeart
+                  className="text-[20px] text-neutral-500"
+                  onClick={handleLike}
+                />
+                <h1 className="text-[15px] text-neutral-500">{blog?.likes}</h1>
+              </div>
               <div className="flex gap-2">
                 <FaRegComment
                   className="text-[20px] text-neutral-500"
@@ -275,7 +291,9 @@ const Blog = () => {
                 ))}
               </div>
             ) : (
-              <h2>Loading releted blogs...</h2>
+              <h2 className="text-center text-neutral-500 text-[15px] mt-5">
+                Loading releted blogs...
+              </h2>
             )}
           </div>
         </div>

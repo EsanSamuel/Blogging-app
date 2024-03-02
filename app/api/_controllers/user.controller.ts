@@ -17,10 +17,11 @@ type Params = {
 };
 
 class userController {
-  static async getAllUsers(request: Request) {
+  //get all users except logged in user
+  static async getAllUsers(request: Request, { params }: Params) {
     try {
       connectDB();
-      const getUsers = await Users.find({});
+      const getUsers = await Users.find({ _id: { $ne: params.id } });
       return new Response(
         JSON.stringify(new ApiSuccess(200, "success", getUsers)),
         { status: 200 }

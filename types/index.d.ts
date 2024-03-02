@@ -29,6 +29,12 @@ export interface IReply extends Document {
   createdAt: any;
 }
 
+export interface ILike extends Document {
+  author: mongoose.Types.ObjectId;
+  blog: mongoose.Types.ObjectId;
+  createdAt: any;
+}
+
 export interface IBlog extends Document {
   author: mongoose.Types.ObjectId;
   title: string;

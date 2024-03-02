@@ -16,6 +16,7 @@ import {
 } from "@/lib/validation";
 import Blog from "@/models/blog.model";
 import BlogComment from "@/models/comment.model";
+import Like from "@/models/like.model";
 import BlogReply from "@/models/reply.model";
 import Save from "@/models/save.modal";
 import { ApiError, ApiSuccess } from "@/utils/ApiResponse";
@@ -382,6 +383,7 @@ class BlogController {
     }
   }
 
+  //get reply
   static async getBlogReply(request: Request, { params }: Params) {
     try {
       connectDB();
@@ -443,6 +445,7 @@ class BlogController {
     }
   }
 
+  //save a blog
   static async saveBlog(request: Request, { params }: Params) {
     const validate = saveValidation.parse(await request.json());
     const { userId, ownerId }: saveType = validate;
@@ -468,6 +471,7 @@ class BlogController {
     }
   }
 
+  //get all blog saved by user
   static async getSavedBlogs(request: Request, { params }: Params) {
     try {
       connectDB();
@@ -490,6 +494,7 @@ class BlogController {
     }
   }
 
+  //get save blog by id
   static async getOneSavedBlog(request: Request, { params }: Params) {
     try {
       connectDB();
@@ -507,6 +512,7 @@ class BlogController {
     }
   }
 
+  //unsave saved blog
   static async unSaveBlog(request: Request, { params }: Params) {
     try {
       connectDB();
@@ -523,9 +529,72 @@ class BlogController {
       );
     }
   }
+
+  //like a blog
+  static async likeBlog(request: Request, { params }: Params) {
+    const { userId } = await request.json();
+    try {
+      connectDB();
+      const blogId = params.id;
+      const existingLike = await Like.findOne({ author: userId, blog: blogId });
+
+      if (existingLike) {
+        return new Response(
+          JSON.stringify(new ApiError(500, "You've already liked!", [""])),
+          { status: 500 }
+        );
+      } else {
+        const likeblog = await Like.create({
+          author: userId,
+          blog: blogId,
+        });
+
+        updateLikeCount(blogId);
+        return new Response(
+          JSON.stringify(new ApiSuccess(201, "Blog liked!", likeblog)),
+          { status: 200 }
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      return new Response(
+        JSON.stringify(new ApiError(500, "Something went wrong!", [error])),
+        { status: 500 }
+      );
+    }
+  }
+
+  //get users that liked a blog
+  static async getLikes(request: Request, { params }: Params) {
+    try {
+      connectDB();
+      const getlikes = await Like.find({ blog: params.id }).populate("author");
+      return new Response(
+        JSON.stringify(new ApiSuccess(20, "Gotten user who liked!", getlikes)),
+        { status: 200 }
+      );
+    } catch (error) {
+      console.log(error);
+      return new Response(
+        JSON.stringify(new ApiError(500, "Something went wrong!", [error])),
+        { status: 500 }
+      );
+    }
+  }
 }
 
 export default BlogController;
+
+const updateLikeCount = async (blogId: string) => {
+  const blog = await Blog.findById(blogId);
+  blog.likes = await Like.countDocuments({ blog: blogId });
+  await blog.save();
+
+  return new Response(
+    JSON.stringify(new ApiSuccess(200, "Liked added to blog!", blog)),
+    { status: 200 }
+  );
+};
 
 /*coded by Esan Samuel
   designed by Esan Samuel*/
