@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import useRoutes from "@/hooks/useRoutes";
 import $axios from "@/lib/api";
 import { useSession } from "next-auth/react";
@@ -25,6 +25,7 @@ const Blog = () => {
   const { data: session } = useSession();
   const getParams = useSearchParams();
   const blogId = getParams.get("blogId");
+  const router = useRouter();
   const [comment, setComment] = React.useState<string>("");
   const modal = useCommentModal();
   const openModal = () => {
@@ -103,6 +104,10 @@ const Blog = () => {
     }
   };
 
+  const handleEdit = () => {
+    router.push(`/edit-blog?blogId=${blogId}`);
+  };
+
   return (
     <>
       <Homebar blog={blog} />
@@ -143,6 +148,11 @@ const Blog = () => {
               <div>
                 <p>Posted {createdAt} ago.</p>
               </div>
+              {session?.user?.id === blog?.author?._id && (
+                <div onClick={handleEdit}>
+                  <p>Edit blog</p>
+                </div>
+              )}
             </div>
           )}
           <div className="mt-20 flex flex-col gap-5">

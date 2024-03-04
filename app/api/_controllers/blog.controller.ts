@@ -148,12 +148,15 @@ class BlogController {
       thirdParagraph,
       thirdContent,
       category,
+      theme,
+      title,
     } = await request.json();
     try {
       connectDB();
       const ImageUrl = await cloudinary.uploader.upload(image);
       const blog = await Blog.findById(params.id);
       blog.image = ImageUrl.url;
+      blog.title = title;
       blog.firstParagraph = firstParagraph;
       blog.firstContent = firstContent;
       blog.secondContent = secondContent;
@@ -161,6 +164,7 @@ class BlogController {
       blog.thirdParagraph = thirdParagraph;
       blog.thirdContent = thirdContent;
       blog.category = category;
+      blog.theme = theme;
 
       await blog.save();
       return new Response(

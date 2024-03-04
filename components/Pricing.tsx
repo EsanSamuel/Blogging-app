@@ -32,7 +32,7 @@ const Pricing = () => {
           {!customer ? (
             <button
               onClick={() =>
-                handleSubscriptionClick("price_1OnXfUI6AqVOEgE3sJPPcKtE")
+                handleSubscriptionClick("price_1Oou2JI6AqVOEgE3A7bCwLI1")
               }
               className="text-white px-4 py-2 rounded-full bg-[#407ef1] hover:opacity-50"
             >

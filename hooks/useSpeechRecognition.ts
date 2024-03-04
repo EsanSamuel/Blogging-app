@@ -3,39 +3,41 @@ import React from "react";
 const useSpeechRecognition = () => {
   const [isListening, setIsListening] = React.useState<boolean>(false);
   const [speechTranscript, setSpeechTranscript] = React.useState<string>("");
+  const [input, setInput] = React.useState<any>("");
   const inputRef = React.useRef<HTMLInputElement>(null);
   const bodyRef = React.useRef<HTMLInputElement>(null);
-  const recognition = new window.webkitSpeechRecognition();
+  const speechRecognition = new window.webkitSpeechRecognition();
 
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  recognition.lang = "en-US";
+  speechRecognition.continuous = true;
+  speechRecognition.interimResults = true;
+  speechRecognition.lang = "en-US";
 
-  recognition.onstart = () => {
+  speechRecognition.onstart = () => {
     setIsListening(true);
   };
 
-  recognition.onend = () => {
+  speechRecognition.onend = () => {
     setIsListening(false);
   };
 
-  recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+  speechRecognition.onerror = (event: SpeechRecognitionErrorEvent) => {
     console.log("Transcript error:", event.error);
   };
 
-  recognition.onresult = (event: SpeechRecognitionEvent) => {
+  speechRecognition.onresult = (event: SpeechRecognitionEvent) => {
     const transcript = Array.from(event.results)
       .map((result: SpeechRecognitionResult) => result[0])
       .map((result: SpeechRecognitionAlternative) => result.transcript)
       .join("");
 
-    console.log(transcript);
+    console.log("Transcript:", transcript);
     setSpeechTranscript(transcript);
   };
 
   React.useEffect(() => {
     if (inputRef.current && inputRef.current === document.activeElement) {
       inputRef.current.value = speechTranscript;
+      setInput(speechTranscript);
     } else if (bodyRef.current && bodyRef.current === document.activeElement) {
       bodyRef.current.value = speechTranscript;
     }
@@ -43,12 +45,12 @@ const useSpeechRecognition = () => {
 
   const handleToggleListen = () => {
     if (isListening) {
-      recognition.stop();
+      speechRecognition.stop();
     } else {
-      recognition.start();
+      speechRecognition.start();
     }
   };
-  return { inputRef, bodyRef, handleToggleListen, isListening };
+  return { inputRef, bodyRef, handleToggleListen, isListening, input };
 };
 
 export default useSpeechRecognition;

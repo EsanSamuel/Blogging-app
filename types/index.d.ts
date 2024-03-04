@@ -133,6 +133,7 @@ export interface blogType {
     | "AI & ML"
     | "Data science"
     | "Blockchain";
+  likes?: number;
   theme: "Light" | "Dark";
 }
 [];
@@ -168,6 +169,7 @@ export interface singleblogType {
     | "AI & ML"
     | "Data science"
     | "Blockchain";
+  likes?: number;
   theme: "Light" | "Dark";
 }
 

@@ -7,13 +7,11 @@ import $axios from "@/lib/api";
 import { useSession } from "next-auth/react";
 import { IoCloseOutline } from "react-icons/io5";
 import useModal from "@/hooks/zustand/useModal";
-import { useRouter } from "next/navigation";
-import { FaMicrophone, FaMicrophoneSlash } from "react-icons/fa";
-import useSpeechRecognition from "@/hooks/useSpeechRecognition";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const CreateBlog = () => {
-  const { data: session } = useSession();
+const page = () => {
   const [image, setImage] = React.useState<string>("");
+  const [prevImage, setPrevImage] = React.useState("");
   const [title, setTitle] = React.useState<string>("");
   const [firstParagraph, setFirstParagraph] = React.useState<string>("");
   const [firstContent, setFirstContent] = React.useState<string>("");
@@ -22,9 +20,9 @@ const CreateBlog = () => {
   const [thirdParagraph, setThirdParagraph] = React.useState<string>("");
   const [thirdContent, setThirdContent] = React.useState<string>("");
   const [category, setCategory] = React.useState<string>("");
-  const [theme, setTheme] = React.useState<string>("Light");
-  const { inputRef, bodyRef, handleToggleListen, isListening, input } =
-    useSpeechRecognition();
+  const [theme, setTheme] = React.useState<string>("");
+  const getParams = useSearchParams();
+  const blogId = getParams.get("blogId");
   const modal = useModal();
   const router = useRouter();
   const openModal = () => {
@@ -51,10 +49,30 @@ const CreateBlog = () => {
     };
   };
 
-  const createBlog = async (e: React.FormEvent) => {
+  React.useEffect(() => {
+    const getBlog = async () => {
+      try {
+        const response = await $axios.get(`/api/blog/${blogId}`);
+        setTitle(response.data.data?.title);
+        setPrevImage(response.data.data?.image);
+        setFirstParagraph(response.data.data?.firstParagraph);
+        setFirstContent(response.data.data?.firstContent);
+        setSecondContent(response.data.data?.secondContent);
+        setSecondParagraph(response.data.data?.secondParagraph);
+        setThirdParagraph(response.data.data?.thirdParagraph);
+        setThirdContent(response.data.data?.thirdContent);
+        setCategory(response.data.data?.category);
+        setTheme(response.data.data?.theme);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (blogId) getBlog();
+  }, [blogId]);
+
+  const editBlog = async (e: React.FormEvent) => {
     e.preventDefault();
     const body = {
-      userId: session?.user?.id,
       title,
       image,
       firstParagraph,
@@ -67,42 +85,33 @@ const CreateBlog = () => {
       theme,
     };
     try {
-      const response = await $axios.post("/api/blog/new", body);
-      console.log(response.data);
-      router.push("/home");
-      modal.onClose();
+      const response = await $axios.patch(`/api/blog/${blogId}`, body);
+      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
   };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!input) {
-      setTitle(event.target.value);
-    } else {
-      setTitle(input);
-      setTitle(event.target.value);
-    }
-  };
-
-  React.useEffect(() => {
-    if (input) {
-      setTitle(input);
-    }
-  }, [input]);
-
   return (
     <div className="md:flex gap-5">
-      <Sidebar setTheme={setTheme} />
+      <Sidebar setTheme={setTheme} theme={theme} />
       <div className="md:p-20 p-5">
+        <h1 className="text-neutral-500 text-[30px] font-bold mb-5">
+          Edit Blog
+        </h1>
         {!image ? (
           <div className="min-h-[250px] border border-dotted border-neutral-400 rounded  text-center flex justify-center flex-col items-center">
+            <Image
+              className="rounded-[10px] max-h-[250px] w-auto"
+              width={1000}
+              height={1000}
+              src={prevImage}
+              alt=""
+            />
             <input
               type="file"
               className="opacity-0 h-full w-full"
               onChange={handleImageChange}
             />
-            <CiImageOn className=" text-[50px] text-neutral-500" />
           </div>
         ) : (
           <div className="min-h-[250px] border border-dotted border-neutral-500 rounded text-center flex justify-center items-center p-10">
@@ -118,6 +127,7 @@ const CreateBlog = () => {
         <div className="py-10 flex gap-8">
           <select
             className="text-neutral-500 outline-none"
+            value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
             <option>Select Category</option>
@@ -127,26 +137,12 @@ const CreateBlog = () => {
             <option>Data science</option>
             <option>Blockchain</option>
           </select>
-
-          <div>
-            <button
-              onClick={handleToggleListen}
-              className="p-3 bg-[#407ef1] rounded-full hover:opacity-50"
-            >
-              {isListening ? (
-                <FaMicrophoneSlash className="text-[20px] text-white " />
-              ) : (
-                <FaMicrophone className="text-[20px] text-white " />
-              )}
-            </button>
-          </div>
         </div>
         <div className="flex flex-col">
           <input
             className="border-none text-neutral-500 text-[40px] font-bold outline-none"
             placeholder="Article Title..."
-            onChange={handleChange}
-            ref={inputRef}
+            onChange={(e) => setTitle(e.target.value)}
             value={title}
           />
 
@@ -154,13 +150,14 @@ const CreateBlog = () => {
             className="border-none text-neutral-500 text-[20px] font-bold mt-10 outline-none"
             placeholder="First Pargraph..."
             onChange={(e) => setFirstParagraph(e.target.value)}
-            ref={bodyRef}
+            value={firstParagraph}
           />
 
           <textarea
             className="border-none text-neutral-500 text-[15px] font-bold min-h-[300px] mt-10 outline-none"
             placeholder="First Content..."
             onChange={(e) => setFirstContent(e.target.value)}
+            value={firstContent}
           ></textarea>
 
           <div className="mt-20 flex flex-col">
@@ -168,12 +165,14 @@ const CreateBlog = () => {
               className="border-none text-neutral-500 text-[20px] font-bold mt-10 outline-none"
               placeholder="Second Pargraph..."
               onChange={(e) => setSecondParagraph(e.target.value)}
+              value={secondParagraph}
             />
 
             <textarea
               className="border-none text-neutral-500 text-[15px] font-bold min-h-[300px] mt-10 outline-none"
               placeholder="Second Content..."
               onChange={(e) => setSecondContent(e.target.value)}
+              value={secondContent}
             ></textarea>
           </div>
 
@@ -182,12 +181,14 @@ const CreateBlog = () => {
               className="border-none text-neutral-500 text-[20px] font-bold mt-10 outline-none"
               placeholder="Third Pargraph..."
               onChange={(e) => setThirdParagraph(e.target.value)}
+              value={thirdParagraph}
             />
 
             <textarea
               className="border-none text-neutral-500 text-[15px] font-bold min-h-[300px] mt-10 outline-none"
               placeholder="Third Content..."
               onChange={(e) => setThirdContent(e.target.value)}
+              value={thirdContent}
             ></textarea>
           </div>
         </div>
@@ -205,7 +206,7 @@ const CreateBlog = () => {
           className="bg-[#407ef1] rounded-full text-white p-2 px-4 "
           onClick={openModal}
         >
-          Publish
+          Edit
         </button>
       </div>
 
@@ -218,7 +219,7 @@ const CreateBlog = () => {
                 onClick={closeModal}
               />
               <h1 className="text-neutral-500 font-semibold">
-                Are you sure you want to publish this article?
+                Are you sure you want to edit this article?
               </h1>
               <div className=" flex gap-4 mt-10 w-full">
                 <button
@@ -229,9 +230,9 @@ const CreateBlog = () => {
                 </button>
                 <button
                   className="bg-[#407ef1] rounded-full text-white p-2 px-4 "
-                  onClick={createBlog}
+                  onClick={editBlog}
                 >
-                  Publish
+                  Edit
                 </button>
               </div>
             </div>
@@ -242,4 +243,4 @@ const CreateBlog = () => {
   );
 };
 
-export default CreateBlog;
+export default page;

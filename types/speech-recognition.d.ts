@@ -12,7 +12,7 @@ interface SpeechRecognitionAlternative {
 interface SpeechRecognitionEvent extends Event {
   readonly resultIndex: number;
   readonly results: SpeechRecognitionResultList;
-  readonly intrepretation: any;
+  readonly interpretation: any;
 }
 
 interface SpeechRecognitionErrorEvent extends Event {

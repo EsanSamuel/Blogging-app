@@ -56,6 +56,16 @@ const Card = ({ blog }: Props) => {
 
   const { data: comments = [] } = useRoutes(`/api/comment/${blog._id}`);
 
+  const handleLike = async () => {
+    try {
+      await $axios.post(`/api/like/${blog._id}`, {
+        userId: session?.user?.id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="h-auto border border-neutral-200 rounded-[10px] p-5 w-auto cursor-pointer">
       <div className="md:flex justify-between gap-5">
@@ -101,7 +111,13 @@ const Card = ({ blog }: Props) => {
       </div>
       <div className="justify-between flex">
         <div className="flex gap-4">
-          <AiOutlineHeart className="text-neutral-500 text-[20px] mt-5" />
+          <div className="flex gap-2">
+            <AiOutlineHeart
+              className="text-neutral-500 text-[20px] mt-5"
+              onClick={handleLike}
+            />
+            <h1 className="text-neutral-500 text-[15px] mt-5">{blog?.likes}</h1>
+          </div>
           <div className="flex gap-2">
             <FaRegComments className="text-neutral-500 text-[20px] mt-5" />
             <h1 className="text-neutral-500 text-[15px] mt-5">

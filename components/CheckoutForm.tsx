@@ -41,8 +41,9 @@ const CheckoutForm = ({ customerId, priceId }: Props) => {
       priceId,
     });
     const subscription = await response.data.data;
+    console.log(response.data.data);
     const stripePayload = await stripe.confirmCardPayment(
-      subscription.clientSecret,
+      `${subscription.subscriptionId}_secret_${subscription.clientSecret}`,
       {
         payment_method: {
           card: elements.getElement(CardElement) as StripeCardElement,

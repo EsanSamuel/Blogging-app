@@ -4,9 +4,10 @@ import React from "react";
 
 type Props = {
   setTheme: any;
+  theme?: string;
 };
 
-const Sidebar = ({ setTheme }: Props) => {
+const Sidebar = ({ setTheme, theme }: Props) => {
   const { user } = React.useContext(ApiContext) as TProps;
   return (
     <div className="p-5 border-r border-neutral-300 w-[250px] h-[100vh] sticky top-0 md:flex hidden flex flex-col gap-5">
@@ -18,6 +19,7 @@ const Sidebar = ({ setTheme }: Props) => {
         <select
           className="p-2 outline-none"
           onChange={(e) => setTheme(e.target.value)}
+          value={theme}
         >
           <option>Light</option>
           <option>Dark</option>

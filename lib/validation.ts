@@ -70,6 +70,43 @@ export const blogValidation = z.object({
 
 export type blogType = z.infer<typeof blogValidation>;
 
+export const editBlogValidation = z.object({
+  title: z.string().min(1, {
+    message: "Title too short",
+  }),
+  image: z.string().min(1, {
+    message: "Image too short",
+  }),
+  firstParagraph: z.string().min(1, {
+    message: "firstParagraph too short",
+  }),
+  firstContent: z.string().min(1, {
+    message: "firstContent too short",
+  }),
+  secondContent: z.string().min(1, {
+    message: "secondContent too short",
+  }),
+  secondParagraph: z.string().min(1, {
+    message: "secondParagraph too short",
+  }),
+  thirdParagraph: z.string().min(1, {
+    message: "thirdParagraph too short",
+  }),
+  thirdContent: z.string().min(1, {
+    message: "thirdContent too short",
+  }),
+  category: z.enum([
+    "Web development",
+    "Mobile development",
+    "AI & ML",
+    "Data science",
+    "Blockchain",
+  ]),
+  theme: z.enum(["Light", "Dark"]),
+});
+
+export type editBlogType = z.infer<typeof editBlogValidation>;
+
 export const nicknameValidation = z.object({
   nickname: z.string().min(1, {
     message: "nickname too short",

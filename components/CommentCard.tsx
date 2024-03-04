@@ -12,6 +12,7 @@ import ReplyCard from "./ReplyCard";
 import Image from "next/image";
 import { formatDistanceToNowStrict } from "date-fns";
 import { ApiContext, TProps } from "@/context/ApiProvider";
+import { IoCloseOutline } from "react-icons/io5";
 
 type Props = {
   comment: commentProps;
@@ -155,7 +156,7 @@ const CommentCard = ({ comment }: Props) => {
               </div>
             )}
           </div>
-          {replies && (
+          {replies.length > 0 && (
             <button
               onClick={() => setShowReplies(true)}
               className="text-[12px]"
@@ -170,11 +171,15 @@ const CommentCard = ({ comment }: Props) => {
         <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800 bg-opacity-70 ">
           <div className="relative w-full lg:w-3/6 my-6 mx-auto lg:max-w-3xl h-full lg:h-auto">
             <div className="w-full lg:h-auto border-0 rounded-lg relative flex flex-col gap-6 h-auto  p-5 bg-white shadow-lg outline-none focus:outline-none">
+              <IoCloseOutline
+                className="text-neutral-500 text-[20px] cursor-pointer text-right "
+                onClick={() => setReplyModal(false)}
+              />
               <h1 className="text-center">
                 Reply to {authorcomment?.author?.username}'s comment
               </h1>
-              <div className="flex gap-2">
-                <div>
+              <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center">
                   <Image
                     src={authorcomment?.author?.image}
                     width={100}
@@ -183,18 +188,22 @@ const CommentCard = ({ comment }: Props) => {
                     alt=""
                   />
 
-                  <div className="flex gap-3">
-                    <h4 className="text-[10px] text-neutral-500">
-                      {comment?.author?.username}
-                    </h4>
+                  <div className="flex flex-col gap-1">
+                    <div className="flex gap-3">
+                      <h4 className="text-[10px] text-neutral-500">
+                        {comment?.author?.username}
+                      </h4>
+                      <div>
+                        <p className="text-[10px] text-neutral-500">
+                          {createdAt!} ago
+                        </p>
+                      </div>
+                    </div>
                     <div>
-                      <p className="text-[10px] text-neutral-500">
-                        {createdAt!}
-                      </p>
+                      <h1>{authorcomment?.comment}</h1>
                     </div>
                   </div>
                 </div>
-                <h1>{authorcomment?.comment}</h1>
               </div>
               <div className="flex gap-3">
                 <div>
@@ -212,7 +221,12 @@ const CommentCard = ({ comment }: Props) => {
                   onChange={(e) => setReply(e.target.value)}
                 />
               </div>
-              <button onClick={replyComment}>Reply</button>
+              <button
+                className="bg-[#407ef1] text-white p-2 rounded-full"
+                onClick={replyComment}
+              >
+                Reply
+              </button>
             </div>
           </div>
         </div>
