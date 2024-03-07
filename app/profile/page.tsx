@@ -151,8 +151,8 @@ const YourProfile = () => {
               <h1 className="font-bold text-[30px]">
                 {detectUserDay()}, {user?.username}
               </h1>
-              <div className="flex gap-7 items-center">
-                <p className=" text-[17px] text-neutral-600">
+              <div className="flex gap-7 items-center flex-row md:text-start text-center">
+                <p className=" text-[17px] text-neutral-600 text-center ">
                   {user?.nickname}
                 </p>
                 <AiOutlineEdit
@@ -295,9 +295,9 @@ const YourProfile = () => {
 
               <button
                 className="text-white p-3 rounded-full bg-[#407ef1]"
-                onClick={editProfile}
+                onClick={editOthers}
               >
-                Submit
+                Edit Others
               </button>
 
               <h1 className="text-[20px] font-bold">Edit Link</h1>

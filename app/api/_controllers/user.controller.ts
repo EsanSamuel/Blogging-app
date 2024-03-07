@@ -110,11 +110,12 @@ class userController {
 
   static async editOthers(request: Request, { params }: Params) {
     const validate = nicknameValidation.parse(await request.json());
-    const { nickname, jobtype } = validate;
+    const { nickname, jobtype, bio } = validate;
     try {
       const user = await Users.findById(params.id);
       user.nickname = nickname;
       user.jobtype = jobtype;
+      user.bio = bio;
       await user.save();
       return new Response(
         JSON.stringify(new ApiSuccess(201, "success", user)),
