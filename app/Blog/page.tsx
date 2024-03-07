@@ -118,7 +118,7 @@ const Blog = () => {
             : "bg-white text-black"
         }`}
       >
-        <div className="px-[20%] py-20 ">
+        <div className="md:px-[20%] p-5 py-20 ">
           {blog?.image ? (
             <Image
               src={blog?.image}
@@ -286,7 +286,7 @@ const Blog = () => {
           </div>
         )}
 
-        <div className="px-[20%] py-10">
+        <div className="md:px-[20%] p-5 py-10">
           <h1 className="text-neutral-500 text-[20px]">Related Blogs</h1>
           <div className="flex gap-4">
             {!LoadingReletedBlogs ? (
@@ -301,7 +301,7 @@ const Blog = () => {
                 ))}
               </div>
             ) : (
-              <h2 className="text-center text-neutral-500 text-[15px] mt-5">
+              <h2 className="text-center text-neutral-500 text-[15px] mt-5 w-full">
                 Loading releted blogs...
               </h2>
             )}

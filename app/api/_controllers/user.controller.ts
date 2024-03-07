@@ -131,6 +131,50 @@ class userController {
       );
     }
   }
+
+  static async createLink(request: Request, { params }: Params) {
+    const { link } = await request.json();
+    try {
+      const user = await Users.findById(params.id);
+      user.link = link;
+      await user.save();
+      return new Response(
+        JSON.stringify(new ApiSuccess(201, "success", user)),
+        {
+          status: 201,
+        }
+      );
+    } catch (error) {
+      return new Response(
+        JSON.stringify(new ApiError(500, "Something went wrong")),
+        {
+          status: 500,
+        }
+      );
+    }
+  }
+
+  static async editLink(request: Request, { params }: Params) {
+    const { link } = await request.json();
+    try {
+      const user = await Users.findById(params.id);
+      user.link = link;
+      await user.save();
+      return new Response(
+        JSON.stringify(new ApiSuccess(201, "success", user)),
+        {
+          status: 201,
+        }
+      );
+    } catch (error) {
+      return new Response(
+        JSON.stringify(new ApiError(500, "Something went wrong")),
+        {
+          status: 500,
+        }
+      );
+    }
+  }
 }
 
 export default userController;

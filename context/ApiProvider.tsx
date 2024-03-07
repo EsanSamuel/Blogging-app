@@ -20,6 +20,7 @@ export type TProps = {
       | "Software engineer"
       | "Cyber Security expert";
     bio?: string;
+    link?: string;
   }[];
   user: {
     _id: string;
@@ -35,6 +36,7 @@ export type TProps = {
       | "Software engineer"
       | "Cyber Security expert";
     bio?: string;
+    link?: string;
   };
   blogs: {
     author: {
@@ -119,6 +121,7 @@ const ApiProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: user, isLoading: loadingUser } = useRoutes(
     `api/user/${session?.user?.id}`
   );
+  console.log(user);
   if (loadingUser) {
     console.log("loading user...");
   }

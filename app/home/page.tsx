@@ -13,9 +13,18 @@ import Pricing from "@/components/Pricing";
 const page = () => {
   const { blogs, user } = useContext(ApiContext) as TProps;
   const [filterCategory, setFilterCategory] = React.useState<string>("");
+  const [showSetUp, setShowSetUp] = React.useState<boolean>(false);
 
   const filterBlog = (category: string) =>
     filterCategory ? blogs.filter((blog) => blog.category === category) : blogs;
+
+  React.useEffect(() => {
+    const showSetUpModal = setTimeout(() => {
+      setShowSetUp(true);
+    }, 10000);
+
+    return () => clearInterval(showSetUpModal);
+  }, []);
 
   return (
     <div className="w-full pb-10">
@@ -71,7 +80,7 @@ const page = () => {
           <Users />
         </div>
 
-        {/* <Setup />*/}
+        {showSetUp && <Setup setShowSetUp={setShowSetUp} />}
         {/*<Pricing />*/}
       </div>
     </div>

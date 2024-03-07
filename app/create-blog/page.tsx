@@ -76,7 +76,7 @@ const CreateBlog = () => {
     }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!input) {
       setTitle(event.target.value);
     } else {
@@ -90,6 +90,51 @@ const CreateBlog = () => {
       setTitle(input);
     }
   }, [input]);
+
+  const handleChange =
+    (name: string) =>
+    (
+      e: React.ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >
+    ) => {
+      switch (name) {
+        case "title":
+          if (!input) {
+            setTitle(e.target.value);
+          } else {
+            setTitle(input);
+            setTitle(e.target.value);
+          }
+          break;
+        case "firstParagraph":
+          setFirstParagraph(e.target.value);
+          break;
+        case "firstContent":
+          setFirstContent(e.target.value);
+          break;
+        case "secondParagraph":
+          setSecondParagraph(e.target.value);
+          break;
+        case "secondContent":
+          setSecondContent(e.target.value);
+          break;
+        case "thirdParagraph":
+          setThirdParagraph(e.target.value);
+          break;
+        case "thirdContent":
+          setThirdContent(e.target.value);
+          break;
+        case "category":
+          setCategory(e.target.value);
+          break;
+        case "theme":
+          setTheme(e.target.value);
+          break;
+        default:
+          break;
+      }
+    };
 
   return (
     <div className="md:flex gap-5">
@@ -118,7 +163,7 @@ const CreateBlog = () => {
         <div className="py-10 flex gap-8">
           <select
             className="text-neutral-500 outline-none"
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={handleChange("category")}
           >
             <option>Select Category</option>
             <option>Web development</option>
@@ -145,7 +190,7 @@ const CreateBlog = () => {
           <input
             className="border-none text-neutral-500 text-[40px] font-bold outline-none"
             placeholder="Article Title..."
-            onChange={handleChange}
+            onChange={handleChange("title")}
             ref={inputRef}
             value={title}
           />
@@ -153,27 +198,27 @@ const CreateBlog = () => {
           <input
             className="border-none text-neutral-500 text-[20px] font-bold mt-10 outline-none"
             placeholder="First Pargraph..."
-            onChange={(e) => setFirstParagraph(e.target.value)}
+            onChange={handleChange("firstParagraph")}
             ref={bodyRef}
           />
 
           <textarea
             className="border-none text-neutral-500 text-[15px] font-bold min-h-[300px] mt-10 outline-none"
             placeholder="First Content..."
-            onChange={(e) => setFirstContent(e.target.value)}
+            onChange={handleChange("firstContent")}
           ></textarea>
 
           <div className="mt-20 flex flex-col">
             <input
               className="border-none text-neutral-500 text-[20px] font-bold mt-10 outline-none"
               placeholder="Second Pargraph..."
-              onChange={(e) => setSecondParagraph(e.target.value)}
+              onChange={handleChange("secondParagraph")}
             />
 
             <textarea
               className="border-none text-neutral-500 text-[15px] font-bold min-h-[300px] mt-10 outline-none"
               placeholder="Second Content..."
-              onChange={(e) => setSecondContent(e.target.value)}
+              onChange={handleChange("secondContent")}
             ></textarea>
           </div>
 
@@ -181,13 +226,13 @@ const CreateBlog = () => {
             <input
               className="border-none text-neutral-500 text-[20px] font-bold mt-10 outline-none"
               placeholder="Third Pargraph..."
-              onChange={(e) => setThirdParagraph(e.target.value)}
+              onChange={handleChange("thirdParagraph")}
             />
 
             <textarea
               className="border-none text-neutral-500 text-[15px] font-bold min-h-[300px] mt-10 outline-none"
               placeholder="Third Content..."
-              onChange={(e) => setThirdContent(e.target.value)}
+              onChange={handleChange("thirdContent")}
             ></textarea>
           </div>
         </div>

@@ -6,8 +6,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { nicknameType, nicknameValidation } from "@/lib/validation";
 import $axios from "@/lib/api";
+import { IoCloseOutline } from "react-icons/io5";
 
-const Setup = () => {
+type Props = {
+  setShowSetUp: any;
+};
+
+const Setup = ({ setShowSetUp }: Props) => {
   const { data: session } = useSession();
   const { user } = React.useContext(ApiContext) as TProps;
 
@@ -41,10 +46,16 @@ const Setup = () => {
             className="w-full lg:h-auto border-0 rounded-lg relative flex flex-col gap-6 h-auto  p-7 bg-white shadow-lg outline-none focus:outline-none"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <h1 className="text-black text-[25px] font-semibold">
-              {user?.username && user?.username} {user?.username && ","} Set up
-              your profile!
-            </h1>
+            <div className="flex justify-between">
+              <h1 className="text-black text-[25px] font-semibold">
+                {user?.username && user?.username} {user?.username && ","} Set
+                up your profile!
+              </h1>
+              <IoCloseOutline
+                className="text-neutral-500 text-[20px] cursor-pointer text-right "
+                onClick={() => setShowSetUp(false)}
+              />
+            </div>
             <div className=" flex gap-2 mt-10 w-full flex-col items-center">
               {user?.image ? (
                 <Image

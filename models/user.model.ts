@@ -30,6 +30,9 @@ const userSchema = new Schema<IUser>({
   bio: {
     type: String,
   },
+  link : {
+    type:String
+  },
   createdAt: {
     type: Date,
     default: () => new Date().toISOString(),

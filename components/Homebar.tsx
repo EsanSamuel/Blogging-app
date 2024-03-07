@@ -30,7 +30,13 @@ const Homebar = ({ blog }: { blog?: any }) => {
         <AiOutlineMenu className="text-[20px] font-extrabold text-neutral-500 md:hidden" />
         <h1 className="md:text-[30px] text-[25px] font-extrabold flex gap-2 items-center">
           <FaHashnode className="text-[#407ef1] text-[30px]" />
-          <span className={`md:flex hidden ${blog?.theme === "Dark" ? "text-white" : "text-black" }`}>hashnode</span>
+          <span
+            className={`md:flex hidden ${
+              blog?.theme === "Dark" ? "text-white" : "text-black"
+            }`}
+          >
+            hashnode
+          </span>
         </h1>
       </div>
       <ul className="flex gap-10 text-[14px] px-20 font-semibold text-neutral-500 md:flex hidden items-center bg-transparent cursor-pointer">
@@ -53,13 +59,13 @@ const Homebar = ({ blog }: { blog?: any }) => {
           </div>
           <IoSunnyOutline className="text-[25px] font-bold text-neutral-500 md:flex hidden" />
           <IoMdNotificationsOutline className="text-[25px] font-bold text-neutral-500 md:flex hidden" />
-          <div>
+          <div onClick={() => router.push("/profile")}>
             {user?.image ? (
               <Image
                 src={user?.image}
                 width={40}
                 height={40}
-                className="rounded-full"
+                className="rounded-full w-[40px] h-[40px] "
                 alt=""
               />
             ) : (

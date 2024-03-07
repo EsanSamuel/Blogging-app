@@ -21,6 +21,10 @@ const Profile = ({ params }: Params) => {
   if (loadingUserBlogs) {
     console.log("loading user blogs...");
   }
+
+  const { data: user, } = useRoutes(
+    `/api/user/${params?.id}`
+  );
   return <div>Profile</div>;
 };
 

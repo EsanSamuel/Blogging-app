@@ -13,6 +13,7 @@ export interface IUser extends Document {
     | "Software engineer"
     | "Cyber Security expert";
   bio?: string;
+  link?: string;
 }
 
 export interface IComment extends Document {
@@ -83,6 +84,7 @@ export interface usersType {
     | "Backend developer"
     | "Software engineer"
     | "Cyber Security expert";
+  link?: string;
 }
 [];
 
@@ -100,6 +102,7 @@ export interface userType {
     | "Software engineer"
     | "Cyber Security expert";
   bio?: string;
+  link?: string;
 }
 
 export interface blogType {
@@ -382,6 +385,7 @@ export interface singleReplyProps {
         | "Backend developer"
         | "Software engineer"
         | "Cyber Security expert";
+      link?: string;
     };
     blog: {
       author: {
@@ -397,6 +401,7 @@ export interface singleReplyProps {
           | "Backend developer"
           | "Software engineer"
           | "Cyber Security expert";
+        link?: string;
       };
       _id: string;
       title: string;
