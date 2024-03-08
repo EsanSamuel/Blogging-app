@@ -9,10 +9,14 @@ import { MdFilterListOff } from "react-icons/md";
 import Setup from "../../components/Setup";
 import Users from "@/components/Users";
 import Pricing from "@/components/Pricing";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const page = () => {
   const { blogs, user } = useContext(ApiContext) as TProps;
-  const [filterCategory, setFilterCategory] = React.useState<string>("");
+  const [filterCategory, setFilterCategory] = useLocalStorage<string>(
+    "filterCategory",
+    ""
+  );
   const [showSetUp, setShowSetUp] = React.useState<boolean>(false);
 
   const filterBlog = (category: string) =>
