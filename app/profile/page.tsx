@@ -5,7 +5,7 @@ import useCommentModal from "@/hooks/zustand/useCommentModal";
 import useModal from "@/hooks/zustand/useModal";
 import $axios from "@/lib/api";
 import { format, formatDistanceToNowStrict } from "date-fns";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -209,6 +209,14 @@ const YourProfile = () => {
               Edit Others
             </button>
           </div>
+        </div>
+        <div className="flex items-center">
+          <button
+            className="px-10 py-2  rounded-full border-black border text-black text-center "
+            onClick={() => signOut()}
+          >
+            Log out
+          </button>
         </div>
       </div>
 

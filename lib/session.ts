@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import Users from "@/models/user.model";
 import { AdapterUser } from "next-auth/adapters";
 import connectDB from "./connect";
+import { sendEmailMessage } from "@/utils/email";
 
 type IUser = {
   user: User | AdapterUser;
@@ -35,6 +36,7 @@ export const authOptions: AuthOptions = {
         }
 
         console.log("Sign in successful!");
+        await sendEmailMessage(user.email, user.name);
         return true;
       } catch (error) {
         console.log(error);
