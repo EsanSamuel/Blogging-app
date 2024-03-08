@@ -11,6 +11,7 @@ const useLocalStorage = <T>(
   //checking if there is a stored value, if there is parse through it else return initial value
   const initial = storedValue ? JSON.parse(storedValue) : initialValue;
 
+  //create state to store and update value
   const [value, setValue] = React.useState<T>(initial);
 
   //taking a newValue and updating it
