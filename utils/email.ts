@@ -5,7 +5,7 @@ const transporter = createTransport({
   port: 587,
   auth: {
     user: "esansamuel555@gmail.com",
-    pass: "x1NcUkfSyHtZwsza",
+    pass: process.env.SMTP_PASSWORD,
   },
 });
 
